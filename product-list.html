@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<link rel="stylesheet" href="first.css">
+<style>
+button{
+transition: all 0.3s ease-in-out;
+padding: 15px;
+margin-top: 5px;
+border: 0px gray solid;
+background-color: #ffc003;
+font-size: 15px;
+font-family: inherit;
+
+}
+.button{
+transition: all 0.3s ease-in-out;
+padding: 15px;
+margin-top: 5px;
+border: 0px gray solid;
+background-color: #ffc003;
+font-size: 15px;
+font-family: inherit;
+text-decoration: none;
+color: black;
+
+}
+</style>
+<body>
+  <div class="wrapper">
+    <section class="row product-list">
+    </section>
+  </div>
+  <script>
+  let products = JSON.parse(localStorage.getItem("products"));
+  if(products === null) {
+    products = [];
+  };
+
+  console.log(products);
+
+  let productListHTML = "";
+  products.forEach(product => {
+    let productString = `
+      <div class="column item">
+        <div class="featured-image">
+          <img src="img/${product.image}" alt="">
+        </div>
+        <div class="product-description">
+          ${product.description}
+        </div>
+        <div class="details">
+          <span class='label'>Price: <span>${product.price}</span></span>
+          <span class="label">Quantity Available: <span>${product.quantity}</span></span>
+        </div>
+        <div class="actions">
+          <a class="button" href="product-create.html?id=${product.id}">View</a>
+          <button class="button">Edit</button>
+          <button>Delete</button>
+        </div>
+      </div>
+    `;
+    productListHTML += productString;
+  });
+
+  const productsListContainer = document.querySelector(".product-list");
+  productsListContainer.innerHTML = productListHTML;
+
+  
+  </script>
+</body>
+</html>

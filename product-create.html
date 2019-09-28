@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<link rel="stylesheet" href="product-create.css">
+<body>
+  <form id="product-form">
+    <h1>Add New Product</h1>
+    <input type="text" placeholder="product name" name="name" value="product 1"/>
+    <input type="text" placeholder="product price" name="price"/>
+    <input type="text" placeholder="quantity available" name="quantity"/>
+    <textarea name="description" placeholder="describe the product"></textarea>
+    <select name="image">
+      <option value="beadroom.png">Image 1</option>
+      <option value="beadroom0.png">Image 2</option>
+      <option value="brace1.png">Image 3</option>
+      <option value="brace2.png">Image 4</option>
+      <option value="brace3.png">Image 5</option>
+    </select>
+    <button class="button">Save Product</button>
+  </form>
+  
+
+
+<script>
+
+const form = document.getElementById("product-form");
+
+const saveProduct = (event) => {
+  event.preventDefault();
+  // console.log(event);
+  const name = form.elements.name.value;
+  const price = form.elements.price.value;
+  const description = form.elements.description.value;
+  const quantity = form.elements.quantity.value;
+  const image = form.elements.image.value;
+
+  const newProduct = {
+    name, price, description, quantity, image
+  };
+
+  retrievedProductsString = localStorage.getItem("products");
+  if(retrievedProductsString === null) {
+    localStorage.setItem("products", "[]");
+    retrievedProductsString = localStorage.getItem("products");
+  }
+
+  const products = JSON.parse(retrievedProductsString);
+
+  let nextId;
+  if(products.length === 0) {
+    nextId = 1;
+  } else {
+    const lastProductIndex = products.length - 1;
+    const lastProduct = products[lastProductIndex];
+    nextId = lastProduct.id + 1;
+  }
+  newProduct.id = nextId;
+  products.push(newProduct);
+
+  localStorage.setItem("products", JSON.stringify(products));
+  location.href = "product-list.html";
+}
+form.addEventListener('submit', saveProduct);
+// console.log(form.elements.productName.value);
+
+
+   
+
+</script>
+</body>
+</html>
